@@ -14,11 +14,11 @@ namespace LolStats742
     internal interface IRiotClient
     {
         //users
+        Task<SummonerDTO> GetSummonerByPuuIdAsync(string puuid,
+            CancellationToken token = default);
         Task<SummonerDTO> GetSummonerByNameAsync(string name,     
             CancellationToken token = default);
 
-        Task<SummonerDTO> GetSummonerByPuuIdAsync(string puuid,
-            CancellationToken token = default);
 
         //matches
         Task<List<string>> GetMatchesByUserIdAsync(string matchId,
@@ -29,6 +29,7 @@ namespace LolStats742
             int start = 0,
             int count = 100,
             CancellationToken token = default);
+
     }
 
 
