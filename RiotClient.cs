@@ -21,13 +21,16 @@ namespace LolStats742
 
 
         //matches
-        Task<List<string>> GetMatchesByUserIdAsync(string matchId,
+        Task<List<string>> GetMatchesByUserIdAsync(string userId,
             long? startTime = null,
             long? endTime = null,
             int? queue = null,
             string? type = null,
             int start = 0,
             int count = 100,
+            CancellationToken token = default);
+
+        Task<MatchDTO> GetMatchByMatchIdAsync(string matchId,
             CancellationToken token = default);
 
     }
@@ -56,7 +59,7 @@ namespace LolStats742
         }
 
         public async Task<List<string>> GetMatchesByUserIdAsync(
-            string matchId,
+            string userId,
             long? startTime = null,
             long? endTime = null,
             int? queue = null,
@@ -78,7 +81,12 @@ namespace LolStats742
             queryParameters["start"] = start;
             queryParameters["count"] = count;
 
-            return await GetAsync<List<string>>("europe", $"match/v5/matches/by-puuid/{matchId}/ids", queryParameters);
+            return await GetAsync<List<string>>("europe", $"match/v5/matches/by-puuid/{userId}/ids", queryParameters);
+        }
+
+        public async Task<MatchDTO> GetMatchByMatchIdAsync(string matchId, CancellationToken token = default)
+        {
+            return await GetAsync<MatchDTO>("europe", $"match/v5/matches/{matchId}");
         }
 
         private  async Task<T> GetAsync<T>(string region, string resource, IDictionary<string, object>? queryParameters = null, CancellationToken token = default(CancellationToken))
@@ -108,6 +116,8 @@ namespace LolStats742
 
         private async Task<T> SerializeAsAsync<T>(HttpContent content)
         {
+
+            var contString = content.ReadAsStringAsync();
             var serializer = JsonSerializer.Create();
             serializer.NullValueHandling = NullValueHandling.Ignore;
 

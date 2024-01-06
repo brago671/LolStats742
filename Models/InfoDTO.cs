@@ -21,7 +21,7 @@ namespace LolStats742.Models
         /// <remarks>
         /// The game duration is serialized as an integer representing the duration of the game in seconds.
         /// </remarks>
-        public TimeSpan GameDuration { get; set; }
+        public long GameDuration { get; set; }
 
         /// <summary>
         /// 
@@ -74,7 +74,7 @@ namespace LolStats742.Models
         /// <summary>
         /// Gets or sets the list of participants' information.
         /// </summary>
-        public virtual List<MatchParticipant> Participants { get; set; }
+        public virtual List<ParticipantDTO> Participants { get; set; }
 
         /// <summary>
         /// Gets or sets the platform ID of the match. This should equal one of the <see cref="Models.PlatformId"/> values.
@@ -89,7 +89,7 @@ namespace LolStats742.Models
         /// <summary>
         /// Gets or sets team information.
         /// </summary>
-        public virtual List<MatchTeam> Teams { get; set; }
+        public virtual List<TeamDTO> Teams { get; set; }
 
         /// <summary>
         /// 
